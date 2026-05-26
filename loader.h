@@ -1,5 +1,5 @@
-#ifndef STOPWORDS_H
-#define STOPWORDS_H
+#ifndef LOADER_H
+#define LOADER_H
 
 #include <stdio.h>
 #include <stdlib.h>
