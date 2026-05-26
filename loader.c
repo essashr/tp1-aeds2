@@ -1,26 +1,10 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <ctype.h>
-
-#define MAX_PALAVRA 50
-#define MAX_CAMINHO 100
-
-typedef struct {
-    char palavra[MAX_PALAVRA];
-    int idDoc;
-} Token;
-
-typedef struct {
-    Token* tokens;
-    int tamanho;
-    int capacidade;
-} Corpus;
+#include "loader.h"
 
 const char *stopwords[] = {
     "a", "o", "e", "de", "da", "do",
     "em", "um", "uma", "para", "com"
 };
+
 int isStopWord(char *palavra) {
     int n = sizeof(stopwords)/sizeof(stopwords[0]);
 
