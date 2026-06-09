@@ -12,6 +12,7 @@
 typedef struct {
     char palavra[MAX_PALAVRA];
     int idDoc;
+    int frequencia;
 } Token;
 
 typedef struct {

@@ -104,7 +104,7 @@ Corpus carregarCorpus() {
             if(strlen(palavra) == 0)
                 continue;
 
-            if(ehStopWord(palavra))
+            if(isStopWord(palavra))
                 continue;
 
             adicionarToken(&c, palavra, idDoc);
