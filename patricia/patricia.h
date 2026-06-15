@@ -13,8 +13,8 @@
 #define PATRICIA_H
 #include <stdio.h>
 #include <stdlib.h>
-#include "././loader.h"
-#include "./LISTA_ENCADEADA/lista_encadeada.h"
+#include "./loader.h"
+#include "./lista.h"
 
 #define D 8
 typedef char TipoChave[MAX_PALAVRA];
@@ -33,13 +33,17 @@ typedef struct TipoPatNo {
         struct {
             TipoIndexAmp Index;
             TipoArvore Esq, Dir;
+            char caractere;
         } NoInterno;
         struct {
             TipoChave Chave;
-            ListaDeIDs Lista;
+            ListaOcorrencias Lista;
         } NoFolha;
     } NO;
     
 } TipoPatNo;
+
+int diferenca(char *a, char *b);
+TipoArvore criar_folha(TipoArvore raiz,char *palavra);
 
 #endif
