@@ -18,7 +18,7 @@
 #include <ctype.h>
 
 #define MAX_PALAVRA 50
-#define MAX_CAMINHO 100
+#define MAX_CAMINHO 256
 #define DIR_FABULAS "Fabulas/"
 
 typedef struct {
