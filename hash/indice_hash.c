@@ -9,10 +9,3 @@
  *   Alejandro Mateus Escobar Cavalcante - 6598
  */
 
-#include <stdio.h>
-
-int main(){
-    
-
-    return 0;
-}
