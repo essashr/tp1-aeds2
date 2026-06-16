@@ -23,7 +23,6 @@ typedef struct TipoPatNo {
             TipoIndexAmp Index;
             char indexCaracter;
             TipoArvore Esq, Dir;
-            char caractere;
         } NoInterno;
         struct {
             TipoChave Chave;
