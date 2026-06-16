@@ -5,12 +5,13 @@
 #include "PATRICIA.h"
 #include "././loader.h"
 #include "./LISTA_ENCADEADA/lista_encadeada.h"
+#include "string.h"
     
     int diferenca(char *a, char*b) 
         { 
         int i = 0;
         
-            while(a[i]!='/0'&& b[i]!='/0')
+            while(a[i]!='\0'&& b[i]!='\0')
                 {
                     if (a[i]!=b[i])
                         {
@@ -33,7 +34,50 @@
         }
     
         
-    TipoArvore criar_interno(TipoArvore *no ,int num)
-        {
-            
-        }
+TipoArvore pesquisa(char *palavra,TipoArvore arv) 
+    {   TipoArvore p;
+        if (arv->nt==Externo)
+            {
+                if(strcmp(palavra,arv->NO.NoFolha.Chave)==0)
+                    {
+                        
+                        return arv;
+
+                    }
+                if (palavra[arv->NO.NoInterno.Index] < arv->NO.NoInterno.caractere){
+                    return pesquisa(palavra, arv->NO.NoInterno.Esq);
+                                                                                }
+                else
+                    return pesquisa(palavra, arv->NO.NoInterno.Dir);
+                            }
+                        
+
+        
+    }
+int consulta_dj(char *palavra, TipoArvore arv)
+{
+    TipoArvore no = pesquisa(palavra,arv);
+    int dj = 0;
+    Celula *p = no->NO.NoFolha.Lista.primeiro;
+
+    while (p!=NULL)
+    {
+        dj++;
+        p = p->prox;
+    }
+    return dj;
+}
+void calcular_prioridade(TipoArvore arv,int v[],int n,char *palavra,double rel[])
+{
+            int dj = consulta_dj(palavra, arv);
+
+            if(dj == 0)
+                return;
+
+            double fator =log2((double)n / dj);
+
+            for(int i = 0; i < n; i++)
+            {
+                rel[i] += v[i] * fator;
+            }
+}

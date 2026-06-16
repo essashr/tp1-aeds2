@@ -19,6 +19,8 @@ typedef struct {
     Token* tokens;
     int tamanho;
     int capacidade;
+    int *v_total;
+    
 } Corpus;
 
 extern const char *stopwords[];

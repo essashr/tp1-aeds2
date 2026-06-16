@@ -27,6 +27,7 @@ typedef struct TipoPatNo {
         struct {
             TipoChave Chave;
             ListaDeIDs Lista;
+            int qtddoc;
         } NoFolha;
     } NO;
     

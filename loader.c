@@ -74,6 +74,13 @@ Corpus carregarCorpus() {
 
     char nomeArquivo[MAX_CAMINHO];
 
+    c.v_total = malloc(qtdArquivos*(sizeof(int)));
+
+    for(int i=0;i<qtdArquivos;i++)
+        {
+            c.v_total[i]=0;
+        }
+
     for(int idDoc = 0; idDoc < qtdArquivos; idDoc++) {
 
         fscanf(entrada, "%s", nomeArquivo);
