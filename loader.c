@@ -79,6 +79,7 @@ void adicionarToken(Corpus *c, char *palavra, int idDoc) {
     c->tamanho++;
 }
 
+
 Corpus carregarCorpus() {
     Corpus c;
     c.tamanho = 0;
@@ -92,8 +93,11 @@ Corpus carregarCorpus() {
         exit(1);
     }
 
+
+
     int qtdArquivos;
     fscanf(entrada, "%d", &qtdArquivos);
+    c.tamanho = qtdArquivos;
 
     char nomeArquivo[MAX_CAMINHO];
 
@@ -123,6 +127,7 @@ Corpus carregarCorpus() {
                 continue;
 
             adicionarToken(&c, palavra, idDoc);
+
         }
 
         fclose(fabula);

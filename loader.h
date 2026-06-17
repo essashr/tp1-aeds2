@@ -30,7 +30,12 @@ typedef struct {
     Token *tokens;
     int tamanho;
     int capacidade;
+    int qtdArquivosTotal;
 } Corpus;
+
+typedef struct {
+    int tamanho;
+} qtdArquivo;
 
 int isStopWord(char *palavra);
 void normalizar(char *str);

@@ -14,6 +14,7 @@
 
 #include "lista.h"
 
+
 /*
  * Tamanho da tabela hash.
  *
@@ -36,6 +37,7 @@
 typedef struct EntradaHash {
     char palavra[MAX_PALAVRA];
     ListaOcorrencias  ocorrencias;
+    int qtdeDoc;
     struct EntradaHash *prox; /* próxima entrada na mesma posição (colisão) */
 } EntradaHash;
 

@@ -11,7 +11,7 @@
 
 
 #include "hash.h"
-
+#include "../loader.h"
 /* hashcode
  *
  * Função de hash polinomial (variante Horner):
@@ -33,12 +33,14 @@ int hashcode(const char *palavra) {
  * comparações usados na análise de desempenho.
  */
 void inicializarHash(TabelaHash *h) {
-    for (int i = 0; i < M; i++)
+    for (int i = 0; i < M; i++){
         h->tabela[i] = NULL;
-
+        h->tabela[i]->qtdeDoc = 0;
+    }   
     h->totalComparacoesInsercao = 0;
     h->totalComparacoesBusca    = 0;
 }
+
 
 /* =======================================================================
  * inserirHash
@@ -51,14 +53,14 @@ void inicializarHash(TabelaHash *h) {
  *      - Se não encontrar: aloca nova EntradaHash, inicializa a lista
  *        de ocorrências e a insere na cabeça da lista (O(1)).
  * ======================================================================= */
-void inserirHash(TabelaHash *h, const char *palavra, int idDoc) {
+void inserirHash(TabelaHash *h, const char *palavra, int idDoc, Corpus c) {
     int idx   = hashcode(palavra);
     EntradaHash *atual = h->tabela[idx];
 
+
     /* Percorre a lista encadeada na posição idx */
     while (atual != NULL) {
-        h->totalComparacoesInsercao++;           /* conta a comparação */
-
+        h->totalComparacoesInsercao++; /* conta a comparação */
         if (strcmp(atual->palavra, palavra) == 0) {
             /* Palavra já existe: registra mais uma ocorrência */
             inserirOcorrencia(&atual->ocorrencias, idDoc);
@@ -70,17 +72,22 @@ void inserirHash(TabelaHash *h, const char *palavra, int idDoc) {
 
     /* Palavra nova: cria entrada e insere na cabeça da lista */
     EntradaHash *nova = (EntradaHash *)malloc(sizeof(EntradaHash));
-
+    // AQUI ENTRA O VETOR PARA INDICAR O "NI" DA TFIDF
+    int vetoriDsDoc[c.tamanho];
     if (!nova) {
         printf("Erro: falha ao alocar EntradaHash para \"%s\"\n", palavra);
         return;
     }
+
+
 
     strncpy(nova->palavra, palavra, MAX_PALAVRA - 1);
     nova->palavra[MAX_PALAVRA - 1] = '\0';
 
     inicializarLista(&nova->ocorrencias);
     inserirOcorrencia(&nova->ocorrencias, idDoc);
+    h->tabela[idx]->qtdeDoc++;    // incrementa para indicar que tem +1 idDoc naquela lista de Ocorrencias      
+
 
     /* Inserção na cabeça: nova->prox aponta para quem estava antes */
     nova->prox = h->tabela[idx];
