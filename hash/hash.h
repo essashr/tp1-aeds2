@@ -70,6 +70,8 @@ void inserirHash(TabelaHash *h, const char *palavra, int idDoc);
  */
 EntradaHash *buscarHash(TabelaHash *h, const char *palavra);
 
+int contadj(TabelaHash *h, char *palavra);
+
 /* Libera toda a memória alocada pela tabela. */
 void liberarHash(TabelaHash *h);
 

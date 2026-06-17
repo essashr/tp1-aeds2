@@ -14,3 +14,12 @@
  *   Alejandro Mateus Escobar Cavalcante - 6598
  */
 
+
+
+ int calculaPesoTermo(char * palavra, TabelaHash *h){
+    int idx = hashcode(palavra);
+    int dj = contadj(h,&palavra);
+    int fdji = h->tabela[idx]->ocorrencias.primeiro->qtde;
+    
+
+ }

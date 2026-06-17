@@ -1,14 +1,3 @@
-/*
- * CCF212 - Algoritmos e Estruturas de Dados II - 2026/1
- * Trabalho Pratico I - Grupo TP1-AEDS2
- *
- * Integrantes:
- *   Arthur Emanoel Alecrim Correia  - 6582
- *   Ryan Italo de Andrade Ananias   - 6588
- *   Thomaz Augusto Araujo Silva     - 6577
- *   Alejandro Mateus Escobar Cavalcante - 6598
- */
-
 #ifndef LOADER_H
 #define LOADER_H
 
@@ -18,25 +7,24 @@
 #include <ctype.h>
 
 #define MAX_PALAVRA 50
-#define MAX_CAMINHO 256
-#define DIR_FABULAS "Fabulas/"
+#define MAX_CAMINHO 100
 
 typedef struct {
     char palavra[MAX_PALAVRA];
     int idDoc;
+    int frequencia;
 } Token;
 
 typedef struct {
-    Token *tokens;
+    Token* tokens;
     int tamanho;
     int capacidade;
-    int qtdArquivosTotal;
+    int *v_total;
+    
 } Corpus;
 
-typedef struct {
-    int tamanho;
-} qtdArquivo;
-
+extern const char *stopwords[];
+extern const int stopwords_count;
 int isStopWord(char *palavra);
 void normalizar(char *str);
 void removerPontuacao(char *str);

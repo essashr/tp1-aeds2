@@ -38,7 +38,6 @@ void imprimirIndiceHash(TabelaHash *h, Corpus arquivozao){
 
     for(int i = 0; i < n; i++){
         printf("%s\n", entradas[i]->palavra);
-        int vetor[];
         
     }
 }
