@@ -2,10 +2,19 @@
 #include "hash.h"
 
 
-int calculaPesoTermo(char * palavra, TabelaHash *h){
-    
-}
+typedef struct{
+    int idDoc;
+    double relevancia;
+} ResultadosRel;
 
+
+ void pesosTermo(char * palavra, TabelaHash *h, int v[], int n, double soma[]);
+
+int tfidf(TabelaHash *h, char **palavra, int qtdPalavras, int n, int *ni, ResultadosRel *resultados);
+
+int cmpRel(const void *a, const void *b);
+ 
+void imprimirRel(ResultadosRel *resultados);
 
 
 

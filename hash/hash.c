@@ -55,19 +55,7 @@ void inicializarHash(TabelaHash *h) {
  * ======================================================================= */
 
 
-int contadj(TabelaHash *h, char *palavra){
-    int idx = hashcode(palavra);
-    EntradaHash *atual = h->tabela[idx];
-    int dj = 0;
 
-    while(atual != NULL){
-        dj++;
-        atual = atual->prox;
-
-    }
-
-    return dj;
-}
 
 
 void inserirHash(TabelaHash *h, const char *palavra, int idDoc, Corpus c) {
