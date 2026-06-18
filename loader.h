@@ -24,6 +24,8 @@
 typedef struct {
     char palavra[MAX_PALAVRA];
     int idDoc;
+    int frequencia;
+    char nomedoArquivo[MAX_PALAVRA];
 } Token;
 
 typedef struct {
@@ -35,7 +37,7 @@ typedef struct {
 int isStopWord(char *palavra);
 void normalizar(char *str);
 void removerPontuacao(char *str);
-void adicionarToken(Corpus *c, char *palavra, int idDoc);
+void adicionarToken(Corpus *c, char *palavra, int idDoc, char *nomeArquivo);
 Corpus carregarCorpus();
 
 #endif

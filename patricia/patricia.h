@@ -32,18 +32,16 @@ typedef struct TipoPatNo {
     {
         struct {
             TipoIndexAmp Index;
+            char indexCaracter;
             TipoArvore Esq, Dir;
-            char caractere;
         } NoInterno;
         struct {
             TipoChave Chave;
             ListaOcorrencias Lista;
+            
         } NoFolha;
     } NO;
     
 } TipoPatNo;
-
-int diferenca(char *a, char *b);
-TipoArvore criar_folha(TipoArvore raiz,char *palavra);
 
 #endif
