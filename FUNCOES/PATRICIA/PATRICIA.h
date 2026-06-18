@@ -33,7 +33,22 @@ typedef struct TipoPatNo {
     
 } TipoPatNo;
 
+typedef struct 
+{
+    double valor;
+    int iddoc;
+
+
+}prioridade;
+
+TipoArvore pesquisa(char *palavra,TipoArvore arv) ;
+int compara_prioridade(const void *a, const void *b);
+int consulta_dj(char *palavra, TipoArvore arv);
 int diferenca(char *a, char *b);
 TipoArvore criar_folha(TipoArvore raiz,char *palavra);
+void calcular_prioridade(TipoArvore arv,int v[],int n,char *palavra,prioridade pri[]);
 
+void impressão_relevancia(prioridade pri[],int n);
+void imprime_lista_ocorrencias(ListaDeIDs lista);
+void imprime_indice_patricia(TipoArvore arv);
 #endif
