@@ -18,14 +18,12 @@
 #include <ctype.h>
 
 #define MAX_PALAVRA 50
-#define MAX_CAMINHO 100
+#define MAX_CAMINHO 256
 #define DIR_FABULAS "Fabulas/"
 
 typedef struct {
     char palavra[MAX_PALAVRA];
     int idDoc;
-    int frequencia;
-    char nomedoArquivo[MAX_PALAVRA];
 } Token;
 
 typedef struct {
@@ -37,7 +35,7 @@ typedef struct {
 int isStopWord(char *palavra);
 void normalizar(char *str);
 void removerPontuacao(char *str);
-void adicionarToken(Corpus *c, char *palavra, int idDoc, char *nomeArquivo);
+void adicionarToken(Corpus *c, char *palavra, int idDoc);
 Corpus carregarCorpus();
 
 #endif
