@@ -38,6 +38,7 @@ typedef struct TipoPatNo {
         struct {
             TipoChave Chave;
             ListaOcorrencias Lista;
+            
         } NoFolha;
     } NO;
     

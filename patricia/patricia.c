@@ -8,6 +8,10 @@ short EExterno (TipoArvore p){
     return (p->nt == Externo);
 }
 
+void criarListaNo (ListaOcorrencias * lista){
+    inicializarLista(&lista);
+}
+
 //Criar Nós Interno e Externo
 TipoArvore CriaNoInt (int i, TipoArvore *Esq, TipoArvore *Dir, char caracter){
     TipoArvore p;
@@ -42,57 +46,60 @@ int CompararPalavras (char *palavra, char *palavraArvore){
 }
 
 //Algoritmo de Inserção 
-TipoArvore InsereEntre (char *palavra, TipoArvore *t, int i){
+TipoArvore InsereEntre (Token informação, TipoArvore *t, int i){
     TipoArvore p;
     if (EExterno(*t) || i < (*t)->NO.NoInterno.Index){
-        p = CriaNoExt(palavra);
+        p = CriaNoExt(informação.palavra);
+        criarListaNo(&p->NO.NoFolha.Lista);
+        inserirOcorrencia(&p->NO.NoFolha.Lista, informação.idDoc);
         
         if (i < (*t)->NO.NoInterno.Index){
-            if (palavra[i] < (*t)->NO.NoInterno.indexCaracter){//O if está analisando um nó que é interno
-                return CriaNoInt(i, &p, t, palavra[i]);
+            if (informação.palavra[i] < (*t)->NO.NoInterno.indexCaracter){//O if está analisando um nó que é interno
+                return CriaNoInt(i, &p, t, informação.palavra[i]);
             } else {
                 return CriaNoInt(i, t, &p, (*t)->NO.NoInterno.indexCaracter);
             }
         }
-        if (palavra[i] < (*t)->NO.NoFolha.Chave[i]){//Já aqui o if está analisando um nó que é externo
-                return CriaNoInt(i, &p, t, palavra[i]);
+        if (informação.palavra[i] < (*t)->NO.NoFolha.Chave[i]){//Já aqui o if está analisando um nó que é externo
+                return CriaNoInt(i, &p, t, informação.palavra[i]);
             } else {
                 return CriaNoInt(i, t, &p, (*t)->NO.NoFolha.Chave[i]);
             }
 
     } else {
-        if (palavra[(*t)->NO.NoInterno.Index] <= (*t)->NO.NoInterno.indexCaracter){
-            (*t)->NO.NoInterno.Esq = InsereEntre(palavra, &(*t)->NO.NoInterno.Esq, i);
+        if (informação.palavra[(*t)->NO.NoInterno.Index] <= (*t)->NO.NoInterno.indexCaracter){
+            (*t)->NO.NoInterno.Esq = InsereEntre(informação, &(*t)->NO.NoInterno.Esq, i);
         } else {
-            (*t)->NO.NoInterno.Dir = InsereEntre(palavra, &(*t)->NO.NoInterno.Dir, i);
+            (*t)->NO.NoInterno.Dir = InsereEntre(informação, &(*t)->NO.NoInterno.Dir, i);
         }
         return (*t);
     }
 }
 
-TipoArvore Insere (Token w, TipoArvore *t){
+TipoArvore Insere (Token informacao, TipoArvore *t, Corpus *dado){
     TipoArvore p;
     if (*t == NULL){
-        return CriaNoExt(w.palavra);
+        return CriaNoExt(informacao.palavra);
     } else {
         p = *t;
 
         //Analisa qual caminho seguir, se é pra esquerda ou direita, caso p seja um no interno que armazena o índice que difere e o caractere.
         while (!EExterno(p)){
-            if (w.palavra[p->NO.NoInterno.Index] <= p->NO.NoInterno.indexCaracter){ //Se o caractere for igual o nó vai ser puxado para a esquerda, para que a lógica não quebre 
+            if (informacao.palavra[p->NO.NoInterno.Index] <= p->NO.NoInterno.indexCaracter){ //Se o caractere for igual o nó vai ser puxado para a esquerda, para que a lógica não quebre 
                 p = p->NO.NoInterno.Esq;
             } else {
                 p = p->NO.NoInterno.Dir;
             }
         }
 
-        int diffIndex = CompararPalavras(w.palavra, p->NO.NoFolha.Chave);
+        int diffIndex = CompararPalavras(informacao.palavra, p->NO.NoFolha.Chave);
         
         if (diffIndex == -1){
-            p = somarFrequencia(w, &p);
-            return (*t);
+            inserirOcorrencia(&p->NO.NoFolha.Lista, informacao.idDoc);
         } else {
-            return InsereEntre(w.palavra, t, diffIndex);
+            (dado->v_total[(informacao.idDoc)-1])++;
+            return InsereEntre(informacao, t, diffIndex);
+            
         }
 
     }
