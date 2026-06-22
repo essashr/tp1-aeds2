@@ -49,7 +49,7 @@ void criarListaNo (ListaOcorrencias * lista);
 TipoArvore CriaNoInt (int i, TipoArvore *Esq, TipoArvore *Dir, char caracter);
 TipoArvore CriaNoExt (TipoChave palavra);
 int CompararPalavras (char *palavra, char *palavraArvore);
-TipoArvore InsereEntre (Token informacao, TipoArvore *t, int i);
+TipoArvore InsereEntre (Token informacao, TipoArvore *t, int i, char caracterArv);
 TipoArvore Insere (Token informacao, TipoArvore *t, Corpus *dado);
 
 
