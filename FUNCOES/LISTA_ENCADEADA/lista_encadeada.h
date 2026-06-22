@@ -1,6 +1,6 @@
 #ifndef LISTA_ENCADEADA_H
 #define LISTA_ENCADEADA_H
-#include "././loader.h"
+#include "../loader.h"
 
 typedef struct Celula* TipoApontadorLista;
 typedef struct Celula {
