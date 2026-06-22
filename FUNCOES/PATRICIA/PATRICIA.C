@@ -25,14 +25,6 @@
         }
     
 
-    TipoArvore criarFolha(char *palavra)
-    {
-        TipoArvore p = malloc(sizeof(TipoPatNo));
-        p->nt = Externo;
-        strcpy(p->NO.NoFolha.Chave, palavra);
-        return p;
-        }
-    
         
 TipoArvore pesquisa(char *palavra,TipoArvore arv) 
     {   TipoArvore p;
@@ -58,17 +50,7 @@ TipoArvore pesquisa(char *palavra,TipoArvore arv)
         
     }
 
-int compara_prioridade(const void *a, const void *b) {
-  
-    const prioridade *p1 = (const prioridade *)a;
-    const prioridade *p2 = (const prioridade *)b;
 
-   
-    if (p2->valor > p1->valor) return 1;
-    if (p2->valor < p1->valor) return -1;
-    
-    return 0; 
-}
 
 int consulta_dj(char *palavra, TipoArvore arv)
 {

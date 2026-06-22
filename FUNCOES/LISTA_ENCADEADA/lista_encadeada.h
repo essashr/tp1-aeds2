@@ -6,6 +6,7 @@ typedef struct Celula* TipoApontadorLista;
 typedef struct Celula {
     Token id;
     TipoApontadorLista prox;
+    int frequencias;
 } Celula;
 
 typedef struct{
