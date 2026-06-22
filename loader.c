@@ -61,9 +61,8 @@ void removerPontuacao(char *str) {
     str[j] = '\0';
 }
 
-void adicionarToken(Corpus *c, char *palavra, int idDoc, char *nomeArquivo) {
-    if(c->tamanho == c->capacidade) {
-
+void adicionarToken(Corpus *c, char *palavra, int idDoc) {
+    if (c->tamanho == c->capacidade) {
         c->capacidade *= 2;
         Token *tmp = realloc(c->tokens, c->capacidade * sizeof(Token));
 
@@ -76,7 +75,6 @@ void adicionarToken(Corpus *c, char *palavra, int idDoc, char *nomeArquivo) {
     }
 
     strcpy(c->tokens[c->tamanho].palavra, palavra);
-    strcpy(c->tokens->nomedoArquivo, nomeArquivo);
     c->tokens[c->tamanho].idDoc = idDoc;
     c->tamanho++;
 }
@@ -124,7 +122,7 @@ Corpus carregarCorpus() {
             if (isStopWord(palavra))
                 continue;
 
-            adicionarToken(&c, palavra, idDoc, nomeArquivo);
+            adicionarToken(&c, palavra, idDoc);
         }
 
         fclose(fabula);
