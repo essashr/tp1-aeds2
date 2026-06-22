@@ -30,6 +30,7 @@ typedef struct {
     Token *tokens;
     int tamanho;
     int capacidade;
+    int * v_total;
 } Corpus;
 
 int isStopWord(char *palavra);
