@@ -12,19 +12,24 @@
 #ifndef HASH_H
 #define HASH_H
 
-#include "lista.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <math.h>
+#include "../lista.h"
+#include "../loader.h"
 
 
 /*
  * Tamanho da tabela hash.
  *
  * Justificativa do fator de carga:
- *   - Tokens totais (sem stopwords) = 493.
- *   - Palavras únicas (vocabulário) = 316.
- *   - Fator de carga alvo: α = 0.75  →  M = 316 / 0.75 ≈ 421.
- *   - Escolhemos o primo mais próximo acima: M = 431.
+ *   - Tokens totais (sem stopwords) = 621.
+ *   - Palavras únicas (vocabulário) = 395.
+ *   - Fator de carga alvo: α = 0.75  →  M = 395 / 0.75 ≈ 526.
+ *   - Escolhemos o primo mais próximo acima: M = 541.
  */
-#define M 431
+#define M 541
 
 #ifndef MAX_PALAVRA
 #define MAX_PALAVRA 50
@@ -37,7 +42,6 @@
 typedef struct EntradaHash {
     char palavra[MAX_PALAVRA];
     ListaOcorrencias  ocorrencias;
-    int qtdeDoc;
     struct EntradaHash *prox; /* próxima entrada na mesma posição (colisão) */
 } EntradaHash;
 
@@ -52,10 +56,7 @@ typedef struct {
     long totalComparacoesBusca;    /* comparações acumuladas nas buscas */
 } TabelaHash;
 
-/* Calcula o índice hash de uma palavra usando função polinomial (Horner). */
 int hashcode(const char *palavra);
-
-/* Inicializa todos os slots da tabela com NULL e zera os contadores. */
 void inicializarHash(TabelaHash *h);
 
 /*
@@ -70,9 +71,6 @@ void inserirHash(TabelaHash *h, const char *palavra, int idDoc);
  */
 EntradaHash *buscarHash(TabelaHash *h, const char *palavra);
 
-int contadj(TabelaHash *h, char *palavra);
-
-/* Libera toda a memória alocada pela tabela. */
 void liberarHash(TabelaHash *h);
 
 #endif

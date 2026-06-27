@@ -1,9 +1,3 @@
-#include "tfidf_hash.h"
-#include "hash.h"
-#include <stdlib.h>
-
-
-
 /*
  * CCF212 - Algoritmos e Estruturas de Dados II - 2026/1
  * Trabalho Pratico I - Grupo TP1-AEDS2
@@ -15,6 +9,8 @@
  *   Alejandro Mateus Escobar Cavalcante - 6598
  */
 
+#include "tfidf_hash.h"
+
 int cmpRel(const void *a, const void *b){
     ResultadosRel *ea = (ResultadosRel*)a;
     ResultadosRel *eb = (ResultadosRel*)b;
@@ -24,10 +20,7 @@ int cmpRel(const void *a, const void *b){
     return 0;
 }
 
-
-
-
- void pesosTermo(char * palavra, TabelaHash *h, int n, double soma[]){
+ void pesosTermo(char* palavra, TabelaHash *h, int n, double soma[]){
     EntradaHash *entrada = buscarHash(h, palavra);
     if(entrada == NULL) return;
 
@@ -38,10 +31,6 @@ int cmpRel(const void *a, const void *b){
         dj++;
         atual = atual->prox;
     }
-
-
-
-    
     
     atual = entrada->ocorrencias.primeiro;
     while(atual != NULL){
@@ -51,12 +40,9 @@ int cmpRel(const void *a, const void *b){
     }
  }
 
-
-
 int tfidf(TabelaHash *h, char **palavra, int qtdPalavras, int n, int *ni, ResultadosRel *resultados){
 
     double *soma = calloc(n, sizeof(double));
-
 
     for(int i = 0; i < qtdPalavras; i++){
         pesosTermo(palavra[i], h, n, soma);
@@ -65,34 +51,25 @@ int tfidf(TabelaHash *h, char **palavra, int qtdPalavras, int n, int *ni, Result
     int quantosrel = 0;
 
     for(int i = 0; i < n; i++){
-            if(soma[i] > 0){
-                resultados[quantosrel].idDoc = i;
-                resultados[quantosrel].relevancia = soma[i] / ni[i];
-                quantosrel++;
-            }
+        if(soma[i] > 0){
+            resultados[quantosrel].idDoc = i;
+            resultados[quantosrel].relevancia = soma[i] / ni[i];
+            quantosrel++;
+        }
     }
 
     free(soma);
-
 
     qsort(resultados, quantosrel, sizeof(ResultadosRel), cmpRel);
 
     return quantosrel;
 }
 
-
-
-void imprimirRel(ResultadosRel *resultados, int quantosrel){
-
-
-
-    for(int i = 0; i < quantosrel; i++ ){
-        printf("Documento %d  -- Relevância %.2f\n", resultados[i].idDoc, resultados[i].relevancia);
-    }        
-
-
+void imprimirRel(ResultadosRel *resultados, int quantosrel, Corpus *corpus) {
+    for (int i = 0; i < quantosrel; i++) {
+        printf("%s - %s -- Relevância %.2f\n",
+        corpus->nomes[resultados[i].idDoc],
+        corpus->titulos[resultados[i].idDoc],
+        resultados[i].relevancia);
+    }
 }
-
-
-
-

@@ -1,23 +1,3 @@
-#include "../loader.h"
-#include "hash.h"
-
-
-typedef struct{
-    int idDoc;
-    double relevancia;
-} ResultadosRel;
-
-
- void pesosTermo(char * palavra, TabelaHash *h, int v[], int n, double soma[]);
-
-int tfidf(TabelaHash *h, char **palavra, int qtdPalavras, int n, int *ni, ResultadosRel *resultados);
-
-int cmpRel(const void *a, const void *b);
- 
-void imprimirRel(ResultadosRel *resultados);
-
-
-
 /*
  * CCF212 - Algoritmos e Estruturas de Dados II - 2026/1
  * Trabalho Pratico I - Grupo TP1-AEDS2
@@ -29,3 +9,22 @@ void imprimirRel(ResultadosRel *resultados);
  *   Alejandro Mateus Escobar Cavalcante - 6598
  */
 
+#ifndef TFIDF_HASH_H
+#define TFIDF_HASH_H
+
+#include "hash.h"
+
+typedef struct{
+    int idDoc;
+    double relevancia;
+} ResultadosRel;
+
+void pesosTermo(char* palavra, TabelaHash *h, int n, double soma[]);
+
+int tfidf(TabelaHash *h, char **palavra, int qtdPalavras, int n, int *ni, ResultadosRel *resultados);
+
+int cmpRel(const void *a, const void *b);
+ 
+void imprimirRel(ResultadosRel *resultados, int quantosrel, Corpus *corpus);
+
+#endif

@@ -9,3 +9,11 @@
  *   Alejandro Mateus Escobar Cavalcante - 6598
  */
 
+#ifndef INDICE_PATRICIA_H
+#define INDICE_PATRICIA_H
+#include "patricia.h"
+
+void imprime_lista_ocorrencias(ListaOcorrencias lista);
+void imprime_indice_patricia(TipoArvore arv);
+
+#endif

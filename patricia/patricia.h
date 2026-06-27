@@ -13,6 +13,7 @@
 #define PATRICIA_H
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 #include "../loader.h"
 #include "../lista.h"
 
@@ -32,13 +33,13 @@ typedef struct TipoPatNo {
     {
         struct {
             TipoIndexAmp Index;
-            char indexCaracter;
             TipoArvore Esq, Dir;
+            char indexCaracter;
         } NoInterno;
         struct {
             TipoChave Chave;
-            ListaOcorrencias *Lista;
-            
+            ListaOcorrencias Lista;
+            int qtddoc;
         } NoFolha;
     } NO;
     
@@ -47,10 +48,11 @@ typedef struct TipoPatNo {
 short EExterno (TipoArvore p);
 void criarListaNo (ListaOcorrencias * lista);
 TipoArvore CriaNoInt (int i, TipoArvore *Esq, TipoArvore *Dir, char caracter);
-TipoArvore CriaNoExt (TipoChave palavra);
+TipoArvore CriaNoExt (char *palavra);
 int CompararPalavras (char *palavra, char *palavraArvore);
+void imprimir(TipoArvore t);
 TipoArvore InsereEntre (Token informacao, TipoArvore *t, int i, char caracterArv);
 TipoArvore Insere (Token informacao, TipoArvore *t, Corpus *dado);
-
-
+TipoArvore pesquisa(char *palavra,TipoArvore arv) ;
+int diferenca(char *a, char *b);
 #endif

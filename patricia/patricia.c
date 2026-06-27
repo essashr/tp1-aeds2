@@ -66,8 +66,8 @@ TipoArvore InsereEntre (Token informacao, TipoArvore *t, int i, char caracterArv
         p = CriaNoExt(informacao.palavra);
 
         //Inicializa a lista de ocorrencias, pois quando cai nessa função quer dizer que uma nova palavra será inserida e criará um nó na lista com seu iddoc 
-        criarListaNo(p->NO.NoFolha.Lista);
-        inserirOcorrencia(p->NO.NoFolha.Lista, informacao.idDoc);
+        criarListaNo(&p->NO.NoFolha.Lista);
+        inserirOcorrencia(&p->NO.NoFolha.Lista, informacao.idDoc);
 
         char caracterNovo = informacao.palavra[i];
         //Compara o caracter da nova palavra com o caracter que diferiu no nó "irmao", eu falo irmão pois na recursão a palavra nova foi até ele para comparar os caracteres e é a partir dele que olharemos se ela ficará a direita ou esquerda e qual dos caracteres que será armazenado no nó interno
@@ -94,8 +94,8 @@ TipoArvore Insere (Token informacao, TipoArvore *t, Corpus *dado){
     TipoArvore p;
     if (*t == NULL){
        *t = CriaNoExt(informacao.palavra);
-       criarListaNo((*t)->NO.NoFolha.Lista);
-       inserirOcorrencia((*t)->NO.NoFolha.Lista, informacao.idDoc);
+       criarListaNo(&(*t)->NO.NoFolha.Lista);
+       inserirOcorrencia(&(*t)->NO.NoFolha.Lista, informacao.idDoc);
         return *t;
     } else {
         p = *t;
@@ -115,14 +115,40 @@ TipoArvore Insere (Token informacao, TipoArvore *t, Corpus *dado){
         
         if (diffIndex == -1){
             //Caso a palavra nova já exista na arvore, irá apenas conferir de qual iddoc é ela e se já tiver na lista será incrementado 1, caso não esteja, irá criar um novo nó com seu iddoc
-            inserirOcorrencia(p->NO.NoFolha.Lista, informacao.idDoc);
+            inserirOcorrencia(&p->NO.NoFolha.Lista, informacao.idDoc);
             return (*t);
         } else {
-            (dado->v_total[(informacao.idDoc)-1])++;
+            //(dado->v_total[(informacao.idDoc)-1])++;
             char caracterArv = p->NO.NoFolha.Chave[diffIndex];
             return InsereEntre(informacao, t, diffIndex, caracterArv);
             
         }
 
     }
+}
+
+TipoArvore pesquisa(char *palavra, TipoArvore arv){
+    TipoArvore p;
+    if (arv->nt == Externo){
+        if (strcmp(palavra, arv->NO.NoFolha.Chave) == 0){
+            return arv;
+        }else{
+            return NULL;
+        }
+    }
+    if (palavra[arv->NO.NoInterno.Index] < arv->NO.NoInterno.indexCaracter){
+        return pesquisa(palavra, arv->NO.NoInterno.Esq);
+    }else{
+        return pesquisa(palavra, arv->NO.NoInterno.Dir);
+    }
+}
+
+int diferenca(char *a, char *b){
+    int i = 0;
+    while (a[i] != '\0' && b[i] != '\0'){
+        if (a[i] != b[i])
+            return i;
+        i++;
+    }
+    return -1;
 }

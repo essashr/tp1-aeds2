@@ -97,22 +97,12 @@ Corpus carregarCorpus() {
 
     char nomeArquivo[MAX_CAMINHO];
 
-<<<<<<< HEAD
-    c.v_total = malloc(qtdArquivos*(sizeof(int)));
-
-    for(int i=0;i<qtdArquivos;i++)
-        {
-            c.v_total[i]=0;
-        }
-
     for(int idDoc = 0; idDoc < qtdArquivos; idDoc++) {
-
-=======
-    for (int idDoc = 0; idDoc < qtdArquivos; idDoc++) {
->>>>>>> 545adccd5568747d67febbc444093e6f6f0033e4
         fscanf(entrada, "%s", nomeArquivo);
+        strcpy(c.nomes[idDoc], nomeArquivo);
+        c.qtdDocs++;
 
-        char caminhoCompleto[MAX_CAMINHO];
+        char caminhoCompleto[MAX_CAMINHO_COMPLETO];
         snprintf(caminhoCompleto, sizeof(caminhoCompleto), DIR_FABULAS "%s", nomeArquivo);
 
         FILE *fabula = fopen(caminhoCompleto, "r");
@@ -121,6 +111,13 @@ Corpus carregarCorpus() {
             printf("Aviso: nao foi possivel abrir %s, pulando...\n", caminhoCompleto);
             continue;
         }
+        // lê a primeira linha como título
+        fgets(c.titulos[idDoc], MAX_CAMINHO, fabula);
+        int len = strlen(c.titulos[idDoc]);
+        if (len > 0 && c.titulos[idDoc][len - 1] == '\n')
+            c.titulos[idDoc][--len] = '\0';
+        if (len > 0 && c.titulos[idDoc][len - 1] == '\r')
+            c.titulos[idDoc][--len] = '\0';
 
         char palavra[MAX_PALAVRA];
 

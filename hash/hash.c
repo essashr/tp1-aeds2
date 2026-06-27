@@ -11,7 +11,6 @@
 
 
 #include "hash.h"
-#include "../loader.h"
 /* hashcode
  *
  * Função de hash polinomial (variante Horner):
@@ -22,7 +21,7 @@ int hashcode(const char *palavra) {
     const int base = 31;
 
     for (int i = 0; palavra[i] != '\0'; i++)
-        h *= base + (unsigned char)palavra[i];
+        h = h * base + (unsigned char)palavra[i];
 
     return (int)(h % M);
 }
@@ -35,7 +34,6 @@ int hashcode(const char *palavra) {
 void inicializarHash(TabelaHash *h) {
     for (int i = 0; i < M; i++){
         h->tabela[i] = NULL;
-        h->tabela[i]->qtdeDoc = 0;
     }   
     h->totalComparacoesInsercao = 0;
     h->totalComparacoesBusca    = 0;
@@ -51,14 +49,9 @@ void inicializarHash(TabelaHash *h) {
  *      - Se encontrar: roda a inserirOcorrencia() da lista, que
  *        incrementa qtde do documento ou cria nova célula.
  *      - Se não encontrar: aloca nova EntradaHash, inicializa a lista
- *        de ocorrências e a insere na cabeça da lista (O(1)).
+ *        de ocorrências e a insere na cabeça da lista.
  * ======================================================================= */
-
-
-
-
-
-void inserirHash(TabelaHash *h, const char *palavra, int idDoc, Corpus c) {
+void inserirHash(TabelaHash *h, const char *palavra, int idDoc) {
     int idx   = hashcode(palavra);
     EntradaHash *atual = h->tabela[idx];
 
@@ -77,24 +70,17 @@ void inserirHash(TabelaHash *h, const char *palavra, int idDoc, Corpus c) {
 
     /* Palavra nova: cria entrada e insere na cabeça da lista */
     EntradaHash *nova = (EntradaHash *)malloc(sizeof(EntradaHash));
-    // AQUI ENTRA O VETOR PARA INDICAR O "NI" DA TFIDF
-    int vetoriDsDoc[c.tamanho];
     if (!nova) {
         printf("Erro: falha ao alocar EntradaHash para \"%s\"\n", palavra);
         return;
     }
-
-
 
     strncpy(nova->palavra, palavra, MAX_PALAVRA - 1);
     nova->palavra[MAX_PALAVRA - 1] = '\0';
 
     inicializarLista(&nova->ocorrencias);
     inserirOcorrencia(&nova->ocorrencias, idDoc);
-    h->tabela[idx]->qtdeDoc++;    // incrementa para indicar que tem +1 idDoc naquela lista de Ocorrencias      
 
-
-    /* Inserção na cabeça: nova->prox aponta para quem estava antes */
     nova->prox = h->tabela[idx];
     h->tabela[idx] = nova;
 }
@@ -104,22 +90,21 @@ void inserirHash(TabelaHash *h, const char *palavra, int idDoc, Corpus c) {
  *
  * Calcula o índice e percorre a lista encadeada comparando palavras.
  * Retorna ponteiro para a EntradaHash se encontrar, NULL caso contrário.
- * Cada strcmp conta para totalComparacoesBusca (análise Tarefa 6).
  * ======================================================================= */
 EntradaHash *buscarHash(TabelaHash *h, const char *palavra) {
     int idx = hashcode(palavra);
     EntradaHash *atual = h->tabela[idx];
 
     while (atual != NULL) {
-        h->totalComparacoesBusca++; /* conta a comparação */
+        h->totalComparacoesBusca++;
 
         if (strcmp(atual->palavra, palavra) == 0)
-            return atual; /* encontrou */
+            return atual;
 
         atual = atual->prox;
     }
 
-    return NULL; /* não encontrou */
+    return NULL;
 }
 
 /* liberarHash

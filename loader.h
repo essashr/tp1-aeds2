@@ -17,10 +17,12 @@
 #include <string.h>
 #include <ctype.h>
 
+
 #define MAX_PALAVRA 50
+#define MAX_DOCS 20
 #define MAX_CAMINHO 256
 #define DIR_FABULAS "Fabulas/"
-
+#define MAX_CAMINHO_COMPLETO (MAX_CAMINHO + 8)  // 8 = strlen("Fabulas/")
 typedef struct {
     char palavra[MAX_PALAVRA];
     int idDoc;
@@ -28,14 +30,11 @@ typedef struct {
 
 typedef struct {
     Token *tokens;
+    char nomes[MAX_DOCS][MAX_PALAVRA];
+    char titulos[MAX_DOCS][MAX_PALAVRA];
+    int qtdDocs;
     int tamanho;
     int capacidade;
-<<<<<<< HEAD
-    int *v_total;
-    
-=======
-    int * v_total;
->>>>>>> 545adccd5568747d67febbc444093e6f6f0033e4
 } Corpus;
 
 int isStopWord(char *palavra);

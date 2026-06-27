@@ -1,19 +1,3 @@
-#ifndef INDICE_HASH_H
-#define INDICE_HASH_H
-#include "hash.h"
-#include "../loader.h"
-
-void construirIndiceHash(TabelaHash *h, Corpus *corpus);
-void imprimirIndiceHash(TabelaHash *h);
-
-/*
-* COMPARA PARA SER USADO NO QSORT
-*/
-void comparar(const void*a, const void*b);
-
-
-
-#endif
 /*
  * CCF212 - Algoritmos e Estruturas de Dados II - 2026/1
  * Trabalho Pratico I - Grupo TP1-AEDS2
@@ -25,3 +9,17 @@ void comparar(const void*a, const void*b);
  *   Alejandro Mateus Escobar Cavalcante - 6598
  */
 
+#ifndef INDICE_HASH_H
+#define INDICE_HASH_H
+#include "hash.h"
+
+void construirIndiceHash(TabelaHash *h, Corpus *corpus);
+void imprimirIndiceHash(TabelaHash *h);
+
+// compara para usar depois no qsort
+int comparar(const void *a, const void *b);
+
+// calcula ni a partir da Tabela Hash
+void calcularNi(TabelaHash *h, int *ni, int qtdDocs);
+
+#endif
