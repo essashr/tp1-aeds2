@@ -15,7 +15,7 @@ void imprime_lista_ocorrencias(ListaOcorrencias lista){
     Celula *atual = lista.primeiro;
     while (atual != NULL)
     {
-        printf("<%d, %d>", atual->qtde, atual->idDoc);
+        printf("<%d, %d> ", atual->qtde, atual->idDoc);
         atual = atual->prox;
     }
 }

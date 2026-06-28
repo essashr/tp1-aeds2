@@ -34,6 +34,7 @@ static const char *stopwords[] = {
     "tiverem", "terei", "tera", "teremos", "terao", "teria", "teriamos", "teriam"
 };
 
+/* verifica se a palavra é uma stop word (preposição, artigo ou conjunção) */
 int isStopWord(char *palavra) {
     int n = sizeof(stopwords) / sizeof(stopwords[0]);
 
@@ -45,11 +46,13 @@ int isStopWord(char *palavra) {
     return 0;
 }
 
+/* converte todos os caracteres para minúsculas */
 void normalizar(char *str) {
     for (int i = 0; str[i]; i++)
         str[i] = tolower(str[i]);
 }
 
+/* remove tudo que não for letra (pontuação, números) */
 void removerPontuacao(char *str) {
     int j = 0;
 
@@ -61,6 +64,7 @@ void removerPontuacao(char *str) {
     str[j] = '\0';
 }
 
+/* adiciona um token ao corpus, dobrando a capacidade via realloc se necessário */
 void adicionarToken(Corpus *c, char *palavra, int idDoc) {
     if (c->tamanho == c->capacidade) {
         c->capacidade *= 2;
@@ -96,14 +100,14 @@ Corpus carregarCorpus() {
     int qtdArquivos;
     fscanf(entrada, "%d", &qtdArquivos);
 
-    char nomeArquivo[MAX_CAMINHO];
+    char nomeArquivo[MAX_NOME];
 
     for(int idDoc = 0; idDoc < qtdArquivos; idDoc++) {
         fscanf(entrada, "%s", nomeArquivo);
         strcpy(c.nomes[idDoc], nomeArquivo);
         c.qtdDocs++;
 
-        char caminhoCompleto[MAX_CAMINHO_COMPLETO];
+        char caminhoCompleto[MAX_CAMINHO];
         snprintf(caminhoCompleto, sizeof(caminhoCompleto), DIR_FABULAS "%s", nomeArquivo);
 
         FILE *fabula = fopen(caminhoCompleto, "r");
@@ -112,7 +116,8 @@ Corpus carregarCorpus() {
             printf("Aviso: nao foi possivel abrir %s, pulando...\n", caminhoCompleto);
             continue;
         }
-        // lê a primeira linha como título
+        /* lê o título antes do loop de tokens — fgets consome a linha,
+        então o fscanf abaixo começa já do conteúdo da fábula */
         fgets(c.titulos[idDoc], MAX_CAMINHO, fabula);
         int len = strlen(c.titulos[idDoc]);
         if (len > 0 && c.titulos[idDoc][len - 1] == '\n')

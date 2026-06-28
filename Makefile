@@ -19,7 +19,9 @@ SRCS = main.c \
 OBJS = $(SRCS:.c=.o)
 TARGET = programa
  
-# Regra principal
+run: $(TARGET)
+	./$(TARGET)
+       
 all: $(TARGET)
  
 $(TARGET): $(OBJS)

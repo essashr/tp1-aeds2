@@ -18,23 +18,27 @@
 #include <ctype.h>
 
 
-#define MAX_PALAVRA 50
-#define MAX_DOCS 20
-#define MAX_CAMINHO 256
-#define DIR_FABULAS "Fabulas/"
-#define MAX_CAMINHO_COMPLETO (MAX_CAMINHO + 8)  // 8 = strlen("Fabulas/")
+#define MAX_PALAVRA      20   // maior palavra medida: 15 ("insignificantes")
+#define MAX_NOME         16   // maior nome medido: 12 ("fabula20.txt")
+#define MAX_TITULO       50   // maior título medido: 35 ("O Rato do Campo e o Rato da Cidade")
+#define MAX_CAMINHO      32   // MAX_NOME + strlen("Fabulas/") = 12 + 8 = 20
+#define MAX_DOCS         20
+#define DIR_FABULAS      "Fabulas/"
+
+/* um token é uma palavra já pré-processada com o id do documento de origem */
 typedef struct {
     char palavra[MAX_PALAVRA];
     int idDoc;
 } Token;
 
+/* corpus completo: vetor dinâmico de tokens + dados dos documentos */
 typedef struct {
-    Token *tokens;
-    char nomes[MAX_DOCS][MAX_PALAVRA];
-    char titulos[MAX_DOCS][MAX_PALAVRA];
-    int qtdDocs;
-    int tamanho;
-    int capacidade;
+    Token *tokens;                      /* palavras indexáveis de todas as fábulas */
+    char nomes[MAX_DOCS][MAX_NOME];     /* nomes dos arquivos, indexados por idDoc */
+    char titulos[MAX_DOCS][MAX_TITULO]; /* primeira linha de cada fábula (título) */
+    int qtdDocs;                        /* quantidade de documentos carregados */
+    int tamanho;                        /* total de tokens no corpus */
+    int capacidade;                     /* capacidade atual do vetor de tokens */
 } Corpus;
 
 int isStopWord(char *palavra);

@@ -19,17 +19,10 @@ typedef struct {
     int iddoc;
 }prioridade;
 
-int consulta_dj(char *palavra, TipoArvore arv);
-
-void calcular_prioridade(TipoArvore arv, int v[], int n, char *palavra, prioridade pri[]);
-
-void impressão_relevancia(prioridade pri[], int n);
-
 TipoArvore pesquisa(const char *palavra, TipoArvore arv, int *qtdBusca);
 void calcular_peso(TipoArvore arv, char *palavra, int n, double soma[], int *qtdBusca);
 int tfidf_patricia(TipoArvore arv, char **palavras, int qtdPalavras, int n, int *ni, prioridade *resultados, int *qtdBusca);
 void imprimirRel_patricia(prioridade *resultados, int quantosrel, Corpus *corpus);
-
 int compara_prioridade(const void *a, const void *b);
 
 #endif

@@ -26,11 +26,6 @@ int hashcode(const char *palavra) {
     return (int)(h % M);
 }
 
-/* inicializarHash
- *
- * Coloca NULL em todas as posições da tabela e zera os contadores de
- * comparações usados na análise de desempenho.
- */
 void inicializarHash(TabelaHash *h) {
     for (int i = 0; i < M; i++){
         h->tabela[i] = NULL;
@@ -55,10 +50,8 @@ void inserirHash(TabelaHash *h, const char *palavra, int idDoc) {
     int idx   = hashcode(palavra);
     EntradaHash *atual = h->tabela[idx];
 
-
-    /* Percorre a lista encadeada na posição idx */
     while (atual != NULL) {
-        h->totalComparacoesInsercao++; /* conta a comparação */
+        h->totalComparacoesInsercao++;
         if (strcmp(atual->palavra, palavra) == 0) {
             /* Palavra já existe: registra mais uma ocorrência */
             inserirOcorrencia(&atual->ocorrencias, idDoc);

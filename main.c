@@ -107,6 +107,7 @@ int main() {
                 printf("Indices construidos com sucesso.\n");
                 printf("Comparacoes de insercao (PATRICIA): %d\n",
                        qtdComparacoesPatricia);
+                printf("Comparacoes de insercao (HASH): %ld\n", h.totalComparacoesInsercao);
                 break;
 
             /* c) Imprimir índice HASH */
@@ -139,6 +140,7 @@ int main() {
                     int qtd;
                     char **termos = lerTermos(&qtd);
                     ResultadosRel resultados[MAX_DOCS];
+                    h.totalComparacoesBusca = 0;
                     int quantosrel = tfidf(&h, termos, qtd,
                                           corpus.qtdDocs, ni, resultados);
                     printf("\n--- Resultados (HASH) ---\n");
@@ -164,6 +166,7 @@ int main() {
                     int qtd;
                     char **termos = lerTermos(&qtd);
                     prioridade resultados[MAX_DOCS];
+                    qtdComparacoesBuscaPatricia = 0;
                     int quantosrel = tfidf_patricia(patricia, termos, qtd,
                                                    corpus.qtdDocs, ni, resultados, &qtdComparacoesBuscaPatricia);
                     printf("\n--- Resultados (PATRICIA) ---\n");
@@ -171,11 +174,10 @@ int main() {
                         printf("Nenhuma fabula encontrada.\n");
                     }else {
                         imprimirRel_patricia(resultados, quantosrel, &corpus);
-                        printf("Comparacoes de busca (PATRICIA): %d\n",
-                           qtdComparacoesBuscaPatricia);
                         }
                     liberarTermos(termos, qtd);
                 }
+                printf("Comparacoes de busca (PATRICIA): %d\n", qtdComparacoesBuscaPatricia);
                 break;
 
             case 0:

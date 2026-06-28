@@ -24,7 +24,7 @@ void construirIndiceHash(TabelaHash *h, Corpus *corpus){
 }
 
 void imprimirIndiceHash(TabelaHash *h){
-    EntradaHash *entradas[5000];
+    EntradaHash *entradas[M];
     int n = 0;
     
     for(int i = 0; i < M; i++){

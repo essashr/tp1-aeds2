@@ -15,6 +15,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+/* Estrutura de lista encadeada igual a do ziviani*/
 typedef struct Celula {
     int idDoc;
     int qtde;
