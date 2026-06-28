@@ -25,8 +25,9 @@ void calcular_prioridade(TipoArvore arv, int v[], int n, char *palavra, priorida
 
 void impressão_relevancia(prioridade pri[], int n);
 
-/*arthur, vou deixar assim pq é como eu to usando no tfidf hash e como to chamando no main*/
-int tfidf_patricia(TipoArvore arv, char **palavras, int qtdPalavras, int n, int *ni, prioridade *resultados);
+TipoArvore pesquisa(const char *palavra, TipoArvore arv, int *qtdBusca);
+void calcular_peso(TipoArvore arv, char *palavra, int n, double soma[], int *qtdBusca);
+int tfidf_patricia(TipoArvore arv, char **palavras, int qtdPalavras, int n, int *ni, prioridade *resultados, int *qtdBusca);
 void imprimirRel_patricia(prioridade *resultados, int quantosrel, Corpus *corpus);
 
 int compara_prioridade(const void *a, const void *b);

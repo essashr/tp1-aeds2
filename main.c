@@ -53,6 +53,9 @@ int main() {
     int corpusCarregado  = 0;
     int indicesConstruidos = 0;
 
+    int qtdComparacoesPatricia = 0;
+    int qtdComparacoesBuscaPatricia = 0;
+
     int opcao;
     do {
         printf("\n=== Menu ===\n");
@@ -94,15 +97,16 @@ int main() {
                 /* Patricia */
                 patricia = NULL;
                 for (int i = 0; i < corpus.tamanho; i++)
-                    Insere(corpus.tokens[i], &patricia, &corpus);
+                    Insere(corpus.tokens[i], &patricia, &qtdComparacoesPatricia);
+
 
                 /* ni — calculado a partir da hash (O(n), sem duplicatas) */
                 calcularNi(&h, ni, corpus.qtdDocs);
 
                 indicesConstruidos = 1;
                 printf("Indices construidos com sucesso.\n");
-                printf("Comparacoes de insercao (HASH): %ld\n",
-                       h.totalComparacoesInsercao);
+                printf("Comparacoes de insercao (PATRICIA): %d\n",
+                       qtdComparacoesPatricia);
                 break;
 
             /* c) Imprimir índice HASH */
@@ -161,12 +165,15 @@ int main() {
                     char **termos = lerTermos(&qtd);
                     prioridade resultados[MAX_DOCS];
                     int quantosrel = tfidf_patricia(patricia, termos, qtd,
-                                                   corpus.qtdDocs, ni, resultados);
+                                                   corpus.qtdDocs, ni, resultados, &qtdComparacoesBuscaPatricia);
                     printf("\n--- Resultados (PATRICIA) ---\n");
-                    if (quantosrel == 0)
+                    if (quantosrel == 0){
                         printf("Nenhuma fabula encontrada.\n");
-                    else
+                    }else {
                         imprimirRel_patricia(resultados, quantosrel, &corpus);
+                        printf("Comparacoes de busca (PATRICIA): %d\n",
+                           qtdComparacoesBuscaPatricia);
+                        }
                     liberarTermos(termos, qtd);
                 }
                 break;
@@ -180,10 +187,12 @@ int main() {
 
     } while (opcao != 0);
 
-    if (indicesConstruidos)
+    if (indicesConstruidos){
         liberarHash(&h);
-    if (corpusCarregado)
+        liberarPatricia(&patricia);}
+    if (corpusCarregado){
         free(corpus.tokens);
+    }
 
     return 0;
 }

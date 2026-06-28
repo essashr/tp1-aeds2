@@ -23,6 +23,7 @@ void inserirOcorrencia(ListaOcorrencias *lista, int idDoc) {
     /* Procura se o documento já tem entrada na lista */
     Celula *atual = lista->primeiro;
 
+    
     while (atual != NULL) {
         if (atual->idDoc == idDoc) {
             atual->qtde++;

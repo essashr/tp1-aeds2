@@ -45,14 +45,15 @@ typedef struct TipoPatNo {
     
 } TipoPatNo;
 
+
+
 short EExterno (TipoArvore p);
 void criarListaNo (ListaOcorrencias * lista);
 TipoArvore CriaNoInt (int i, TipoArvore *Esq, TipoArvore *Dir, char caracter);
 TipoArvore CriaNoExt (char *palavra);
-int CompararPalavras (char *palavra, char *palavraArvore);
+int CompararPalavras (char *palavra, char *palavraArvore, int *qtdComp);
 void imprimir(TipoArvore t);
-TipoArvore InsereEntre (Token informacao, TipoArvore *t, int i, char caracterArv);
-TipoArvore Insere (Token informacao, TipoArvore *t, Corpus *dado);
-TipoArvore pesquisa(char *palavra,TipoArvore arv) ;
-int diferenca(char *a, char *b);
+TipoArvore InsereEntre (Token informacao, TipoArvore *t, int i, char caracterArv, int *qtdComp);
+TipoArvore Insere (Token informacao, TipoArvore *t, int *qtdcomparacoes);
+void liberarPatricia(TipoArvore *t);
 #endif
