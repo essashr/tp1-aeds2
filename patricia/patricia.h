@@ -29,7 +29,7 @@ typedef enum {
 typedef struct TipoPatNo* TipoArvore;
 typedef struct TipoPatNo {
     TipoNo nt;
-    union
+    union //Se o no for interno ele armazenara o index que difere, ponteiro para o lado direito e esquerdo e o caracter menor que diferiu. Se o no for externo irá armazenar a chave (palavra) e uma lista de ocorrencias (que lida e armazena os iddocs quando a palavra se repete na inserção)
     {
         struct {
             TipoIndexAmp Index;
@@ -52,7 +52,6 @@ void criarListaNo (ListaOcorrencias * lista);
 TipoArvore CriaNoInt (int i, TipoArvore *Esq, TipoArvore *Dir, char caracter);
 TipoArvore CriaNoExt (char *palavra);
 int CompararPalavras (char *palavra, char *palavraArvore, int *qtdComp);
-void imprimir(TipoArvore t);
 TipoArvore InsereEntre (Token informacao, TipoArvore *t, int i, char caracterArv, int *qtdComp);
 TipoArvore Insere (Token informacao, TipoArvore *t, int *qtdcomparacoes);
 void liberarPatricia(TipoArvore *t);

@@ -39,25 +39,12 @@ int CompararPalavras (char *palavra, char *palavraArvore, int *qtdComp){
         (*qtdComp)++;
         i++;
 
+        //Se as palavras são iguais
         if (palavra[i] == '\0' && palavraArvore[i] == '\0'){
             return -1;
         }
     } 
     return i;
-}
-
-//Imprimir arvore
-void imprimir(TipoArvore t){
-    if (t == NULL){
-        return;
-    }
-    if (EExterno(t)){
-        printf("%s\n", t->NO.NoFolha.Chave);
-    } else {
-        printf("Index %d Caracter %c\n", t->NO.NoInterno.Index, t->NO.NoInterno.indexCaracter);
-        imprimir(t->NO.NoInterno.Esq);
-        imprimir(t->NO.NoInterno.Dir);
-    }
 }
 
 //Algoritmo de Inserção 
@@ -85,6 +72,7 @@ TipoArvore InsereEntre (Token informacao, TipoArvore *t, int i, char caracterArv
 
     } else {
         (*qtdComp)++;
+        //Percorre a arvore caso o no atual não seja externo ou caso o valor do i que difere seja maior que o armazenado no no interno da vez
         if (informacao.palavra[(*t)->NO.NoInterno.Index] <= (*t)->NO.NoInterno.indexCaracter){
             (*t)->NO.NoInterno.Esq = InsereEntre(informacao, &(*t)->NO.NoInterno.Esq, i, caracterArv, qtdComp);
 
@@ -133,6 +121,7 @@ TipoArvore Insere (Token informacao, TipoArvore *t, int *qtdcomparacoes){
     }
 }
 
+//Libera memoria armazenada da arvore - chamada após o fim do programa
 void liberarPatricia(TipoArvore *t){
     if (*t == NULL)return;
     if (EExterno(*t)){
