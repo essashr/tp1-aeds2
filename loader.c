@@ -83,6 +83,7 @@ Corpus carregarCorpus() {
     Corpus c;
     c.tamanho = 0;
     c.capacidade = 100;
+    c.qtdDocs = 0;
     c.tokens = malloc(c.capacidade * sizeof(Token));
 
     FILE *entrada = fopen(DIR_FABULAS "entrada.txt", "r");

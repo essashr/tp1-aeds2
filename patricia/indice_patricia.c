@@ -15,7 +15,7 @@ void imprime_lista_ocorrencias(ListaOcorrencias lista){
     Celula *atual = lista.primeiro;
     while (atual != NULL)
     {
-        printf("%d, %d", atual->idDoc, atual->qtde);
+        printf("<%d, %d>", atual->qtde, atual->idDoc);
         atual = atual->prox;
     }
 }
@@ -28,7 +28,7 @@ void imprime_indice_patricia(TipoArvore arv){
     }
 
     else if (arv->nt == Externo){
-        printf("%s", arv->NO.NoFolha.Chave);
+        printf("%s\n", arv->NO.NoFolha.Chave);
         imprime_lista_ocorrencias(arv->NO.NoFolha.Lista);
         printf("\n");
     }

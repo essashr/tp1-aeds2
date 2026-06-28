@@ -32,10 +32,11 @@ TipoArvore CriaNoExt (char *palavra){
 }
 
 //Algoritmo que compara as palavras
-int CompararPalavras (char *palavra, char *palavraArvore){
+int CompararPalavras (char *palavra, char *palavraArvore, int *qtdComp){
     int i = 0;
     while (palavra[i] == palavraArvore[i]){
 
+        (*qtdComp)++;
         i++;
 
         if (palavra[i] == '\0' && palavraArvore[i] == '\0'){
@@ -60,9 +61,11 @@ void imprimir(TipoArvore t){
 }
 
 //Algoritmo de Inserção 
-TipoArvore InsereEntre (Token informacao, TipoArvore *t, int i, char caracterArv){
+TipoArvore InsereEntre (Token informacao, TipoArvore *t, int i, char caracterArv, int *qtdComp){
     TipoArvore p;
     if (EExterno(*t) || i < (*t)->NO.NoInterno.Index){
+
+        //Quando cai aqui é duas opções, ou caiu por que é um nó externo da vez, ou seja, já está no local certinho onde a palavra nova deve ser inserida. A outra opção é quando o indice que diferiu é menor que o indice do no interno, quando acontece isso é criado um nó passando o indice novo divergente e a arvore é alocada ou no lado esquerdo ou direito, dependendo se a palavra nova é maior ou menor.
         p = CriaNoExt(informacao.palavra);
 
         //Inicializa a lista de ocorrencias, pois quando cai nessa função quer dizer que uma nova palavra será inserida e criará um nó na lista com seu iddoc 
@@ -71,6 +74,7 @@ TipoArvore InsereEntre (Token informacao, TipoArvore *t, int i, char caracterArv
 
         char caracterNovo = informacao.palavra[i];
         //Compara o caracter da nova palavra com o caracter que diferiu no nó "irmao", eu falo irmão pois na recursão a palavra nova foi até ele para comparar os caracteres e é a partir dele que olharemos se ela ficará a direita ou esquerda e qual dos caracteres que será armazenado no nó interno
+        (*qtdComp)++;
         if (caracterNovo <= caracterArv){
             *t = CriaNoInt(i, &p, t, caracterNovo);
             return *t;
@@ -80,19 +84,21 @@ TipoArvore InsereEntre (Token informacao, TipoArvore *t, int i, char caracterArv
         }  
 
     } else {
+        (*qtdComp)++;
         if (informacao.palavra[(*t)->NO.NoInterno.Index] <= (*t)->NO.NoInterno.indexCaracter){
-            (*t)->NO.NoInterno.Esq = InsereEntre(informacao, &(*t)->NO.NoInterno.Esq, i, caracterArv);
+            (*t)->NO.NoInterno.Esq = InsereEntre(informacao, &(*t)->NO.NoInterno.Esq, i, caracterArv, qtdComp);
 
         } else {
-            (*t)->NO.NoInterno.Dir = InsereEntre(informacao, &(*t)->NO.NoInterno.Dir, i, caracterArv);
+            (*t)->NO.NoInterno.Dir = InsereEntre(informacao, &(*t)->NO.NoInterno.Dir, i, caracterArv, qtdComp);
         }
         return (*t);
     }
 }
 
-TipoArvore Insere (Token informacao, TipoArvore *t, Corpus *dado){
+TipoArvore Insere (Token informacao, TipoArvore *t, int *qtdcomparacoes){
     TipoArvore p;
     if (*t == NULL){
+        (*qtdcomparacoes)++;
        *t = CriaNoExt(informacao.palavra);
        criarListaNo(&(*t)->NO.NoFolha.Lista);
        inserirOcorrencia(&(*t)->NO.NoFolha.Lista, informacao.idDoc);
@@ -102,7 +108,8 @@ TipoArvore Insere (Token informacao, TipoArvore *t, Corpus *dado){
 
         //Analisa qual caminho seguir, se é pra esquerda ou direita, caso p seja um no interno que armazena o índice que difere e o caractere.
         while (!EExterno(p)){
-            if (informacao.palavra[p->NO.NoInterno.Index] <= p->NO.NoInterno.indexCaracter){ //Se o caractere for igual o nó vai ser puxado para a esquerda, para que a lógica não quebre
+            (*qtdcomparacoes)++;
+            if (informacao.palavra[p->NO.NoInterno.Index] <= p->NO.NoInterno.indexCaracter){ //Se o caractere for igual o nó vai ser puxado para a esquerda
                 p = p->NO.NoInterno.Esq;
 
             } else {
@@ -111,44 +118,32 @@ TipoArvore Insere (Token informacao, TipoArvore *t, Corpus *dado){
             }      
         }
 
-        int diffIndex = CompararPalavras(informacao.palavra, p->NO.NoFolha.Chave);
+        int diffIndex = CompararPalavras(informacao.palavra, p->NO.NoFolha.Chave, qtdcomparacoes);
         
         if (diffIndex == -1){
             //Caso a palavra nova já exista na arvore, irá apenas conferir de qual iddoc é ela e se já tiver na lista será incrementado 1, caso não esteja, irá criar um novo nó com seu iddoc
             inserirOcorrencia(&p->NO.NoFolha.Lista, informacao.idDoc);
             return (*t);
         } else {
-            //(dado->v_total[(informacao.idDoc)-1])++;
-            char caracterArv = p->NO.NoFolha.Chave[diffIndex];
-            return InsereEntre(informacao, t, diffIndex, caracterArv);
+            char caracterArv = p->NO.NoFolha.Chave[diffIndex]; //Armazena a letra que difere da palavra dentro da arvore para que seja comparada novamente dentro da função InsereEntre() e dite o caminho se a nova palavra vai para o no esquerdo ou direito e se o no interno armazenara ela (caso seja menor que a letra que difere da palavra nova) ou se armazenará a letra da palavra nova(caso seja menor).
+            return InsereEntre(informacao, t, diffIndex, caracterArv, qtdcomparacoes);
             
         }
 
     }
 }
 
-TipoArvore pesquisa(char *palavra, TipoArvore arv){
-    TipoArvore p;
-    if (arv->nt == Externo){
-        if (strcmp(palavra, arv->NO.NoFolha.Chave) == 0){
-            return arv;
-        }else{
-            return NULL;
-        }
-    }
-    if (palavra[arv->NO.NoInterno.Index] < arv->NO.NoInterno.indexCaracter){
-        return pesquisa(palavra, arv->NO.NoInterno.Esq);
-    }else{
-        return pesquisa(palavra, arv->NO.NoInterno.Dir);
+void liberarPatricia(TipoArvore *t){
+    if (*t == NULL)return;
+    if (EExterno(*t)){
+        liberarLista(&(*t)->NO.NoFolha.Lista);
+        free(*t);
+        *t = NULL;
+    } else {
+        liberarPatricia(&(*t)->NO.NoInterno.Esq);
+        liberarPatricia(&(*t)->NO.NoInterno.Dir);
+        free(*t);
+        *t = NULL;
     }
 }
 
-int diferenca(char *a, char *b){
-    int i = 0;
-    while (a[i] != '\0' && b[i] != '\0'){
-        if (a[i] != b[i])
-            return i;
-        i++;
-    }
-    return -1;
-}
