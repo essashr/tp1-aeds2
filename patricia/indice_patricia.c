@@ -11,6 +11,7 @@
 
 #include "patricia.h"
 
+//Percorre imprimindo cada idDoc e a quantidade que a palavra se repetiu dentro dele
 void imprime_lista_ocorrencias(ListaOcorrencias lista){
     Celula *atual = lista.primeiro;
     while (atual != NULL)
@@ -19,6 +20,8 @@ void imprime_lista_ocorrencias(ListaOcorrencias lista){
         atual = atual->prox;
     }
 }
+
+//Percorre a arvore imprimindo todas as palavras e seus respectivos idDoc com a quantidade que ela se repetiu
 void imprime_indice_patricia(TipoArvore arv){
     if (arv == NULL)
         return;
