@@ -9,7 +9,7 @@
  *   Alejandro Mateus Escobar Cavalcante - 6598
  */
 
-#include "patricia.h"
+#include "indice_patricia.h"
 
 //Percorre imprimindo cada idDoc e a quantidade que a palavra se repetiu dentro dele
 void imprime_lista_ocorrencias(ListaOcorrencias lista){

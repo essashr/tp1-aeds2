@@ -49,6 +49,7 @@ int main() {
     TabelaHash h;
     TipoArvore patricia = NULL;
     int ni[MAX_DOCS] = {0};
+    inicializarHash(&h);
 
     int corpusCarregado  = 0;
     int indicesConstruidos = 0;
@@ -90,23 +91,26 @@ int main() {
                     break;
                 }
 
+                if (indicesConstruidos){
+                    liberarHash(&h); 
+                    liberarPatricia(&patricia);
+                }
+
                 /* Hash */
                 inicializarHash(&h);
                 construirIndiceHash(&h, &corpus);
 
                 /* Patricia */
+                qtdComparacoesPatricia=0;
                 patricia = NULL;
                 for (int i = 0; i < corpus.tamanho; i++)
                     Insere(corpus.tokens[i], &patricia, &qtdComparacoesPatricia);
 
-
                 /* ni — calculado a partir da hash (O(n), sem duplicatas) */
                 calcularNi(&h, ni, corpus.qtdDocs);
-
                 indicesConstruidos = 1;
                 printf("Indices construidos com sucesso.\n");
-                printf("Comparacoes de insercao (PATRICIA): %d\n",
-                       qtdComparacoesPatricia);
+                printf("Comparacoes de insercao (PATRICIA): %d\n", qtdComparacoesPatricia);
                 printf("Comparacoes de insercao (HASH): %ld\n", h.totalComparacoesInsercao);
                 break;
 

@@ -10,11 +10,13 @@
  */
 
 
-Para executar o programa basta abrir a pasta do projeto no terminal e digitar o seguinte comando: 
-----------------------------------------------------------------------------------------
---make  
-----------------------------------------------------------------------------------------
-Ao rodar esse comando, abrirá uma tela de menu de usuário no qual terão as seguintes opções:
+Para executar o programa, abra a pasta do projeto no terminal e utilize os seguintes comandos: 
+---------------------------------------------------------------------- 
+make # Compila todos os módulos do projeto. 
+make run # Executa o programa (compilando antes, se necessário). 
+make clean # Remove os arquivos objeto (.o) e o executável. 
+---------------------------------------------------------------------- 
+Ao executar o programa, será exibido um menu com as seguintes opções:
 
 1. Carregar corpus: lê os arquivos de fábulas via carregarCorpus() e exibe a
 contagem de tokens e documentos;
@@ -39,5 +41,9 @@ Recomendamos que antes de imprimir ou buscar fábulas digite as opções 1 e 2, 
 
 Caso encerre o programa e queira testá-lo novamente basta usar o seguinte comando no terminal:
 --------------------------------------------------------------------------------------
---./programa
+./programa
+
+ou, de forma equivalente: 
+
+make run
 --------------------------------------------------------------------------------------

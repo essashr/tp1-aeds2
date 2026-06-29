@@ -1,7 +1,4 @@
 #include "patricia.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 
 //Funções auxiliares 
 short EExterno (TipoArvore p){

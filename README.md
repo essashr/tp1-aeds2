@@ -1,3 +1,49 @@
-# tp1-aeds2
+'''
+CCF212 - Algoritmos e Estruturas de Dados II - 2026/1
+Trabalho Pratico I - Grupo TP1-AEDS2
 
-atualização do loader
+Integrantes:
+    Arthur Emanoel Alecrim Correia  - 6582
+    Ryan Italo de Andrade Ananias   - 6588
+    Thomaz Augusto Araujo Silva     - 6577
+    Alejandro Mateus Escobar Cavalcante - 6598
+
+
+Para executar o programa, abra a pasta do projeto no terminal e utilize os seguintes comandos: 
+---------------------------------------------------------------------- 
+make # Compila todos os módulos do projeto. 
+make run # Executa o programa (compilando antes, se necessário). 
+make clean # Remove os arquivos objeto (.o) e o executável. 
+---------------------------------------------------------------------- 
+Ao executar o programa, será exibido um menu com as seguintes opções:
+
+1. Carregar corpus: lê os arquivos de fábulas via carregarCorpus() e exibe a
+contagem de tokens e documentos;
+
+2. Construir índices: inicializa e popula a Hash e a PATRICIA a partir do corpus
+carregado, e calcula o vetor ni[];
+
+3. Imprimir índice – HASH: exibe as palavras em ordem alfabética com suas listas
+de ocorrências;
+
+4. Imprimir índice – PATRICIA: exibe as palavras em ordem alfabética com suas listas
+de ocorrências;
+
+5. Buscar fábulas – HASH: recebe termos de busca, calcula relevância TF-IDF através da tabela HASH e
+exibe os resultados ordenados;
+
+6. Buscar fábulas – PATRICIA: recebe termos de busca, calcula relevância TF-IDF através da árvore PATRICIA e
+exibe os resultados ordenados;
+--------------------------------------------------------------------------------------
+
+Recomendamos que antes de imprimir ou buscar fábulas digite as opções 1 e 2, respectivamente.
+
+Caso encerre o programa e queira testá-lo novamente basta usar o seguinte comando no terminal:
+--------------------------------------------------------------------------------------
+./programa
+
+ou, de forma equivalente: 
+
+make run
+--------------------------------------------------------------------------------------
+'''

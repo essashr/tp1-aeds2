@@ -31,7 +31,7 @@ void inicializarHash(TabelaHash *h) {
         h->tabela[i] = NULL;
     }   
     h->totalComparacoesInsercao = 0;
-    h->totalComparacoesBusca    = 0;
+    h->totalComparacoesBusca = 0;
 }
 
 
@@ -47,7 +47,7 @@ void inicializarHash(TabelaHash *h) {
  *        de ocorrências e a insere na cabeça da lista.
  * ======================================================================= */
 void inserirHash(TabelaHash *h, const char *palavra, int idDoc) {
-    int idx   = hashcode(palavra);
+    int idx = hashcode(palavra);
     EntradaHash *atual = h->tabela[idx];
 
     while (atual != NULL) {
