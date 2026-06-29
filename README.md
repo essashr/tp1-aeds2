@@ -1,4 +1,4 @@
-'''
+```
 CCF212 - Algoritmos e Estruturas de Dados II - 2026/1
 Trabalho Pratico I - Grupo TP1-AEDS2
 
@@ -46,4 +46,4 @@ ou, de forma equivalente:
 
 make run
 --------------------------------------------------------------------------------------
-'''
+```
